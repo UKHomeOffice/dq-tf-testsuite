@@ -1,0 +1,25 @@
+pipeline:
+
+  build:
+    privileged: true
+    image: docker
+    environment:
+      - DOCKER_HOST=tcp://127.0.0.1:2375
+    commands:
+      - docker build -t quay.io/ukhomeofficedigital/dq-tf-testsuite:${DRONE_COMMIT_SHA} .
+
+  image_to_quay:
+    image: docker
+    environment:
+      - DOCKER_HOST=tcp://127.0.0.1:2375
+    commands:
+      - docker login -u="ukhomeofficedigital+dqtftestsuite" -p=${DOCKER_PASSWORD} quay.io
+      - docker push quay.io/ukhomeofficedigital/dq-tf-testsuite:${dq-tf-testsuite}
+
+services:
+  dind:
+    image: docker:dind
+    privileged: true
+    command:
+      - "-s"
+      - "overlay"
