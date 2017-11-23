@@ -14,7 +14,7 @@ pipeline:
       - DOCKER_HOST=tcp://127.0.0.1:2375
     commands:
       - docker login -u="ukhomeofficedigital+dqtftestsuite" -p=${DOCKER_PASSWORD} quay.io
-      - docker push quay.io/ukhomeofficedigital/dq-tf-testsuite:${dq-tf-testsuite}
+      - docker push quay.io/ukhomeofficedigital/dq-tf-testsuite:${DRONE_COMMIT_SHA}
 
 services:
   dind:
