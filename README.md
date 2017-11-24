@@ -20,7 +20,7 @@ Trust the repo in the drone ui
 To run locally with drone exec you'll need to add `--repo.trusted` so:
 
 ```bash
-drone exec --repo.trusted
+drone5 exec --repo.trusted
 ```
 
 ## What does it test
