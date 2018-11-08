@@ -1,7 +1,6 @@
 pipeline:
 
   build:
-    privileged: true
     image: docker
     environment:
       - DOCKER_HOST=tcp://127.0.0.1:2375
@@ -32,7 +31,6 @@ pipeline:
 services:
   dind:
     image: docker:dind
-    privileged: true
     command:
       - "-s"
       - "overlay"
