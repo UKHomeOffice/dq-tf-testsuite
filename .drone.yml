@@ -12,17 +12,21 @@ pipeline:
     environment:
       - DOCKER_HOST=tcp://172.17.0.1:2375
     commands:
-      - docker login -u="ukhomeofficedigital+dqbot" -p=${DOCKER_PASSWORD} quay.io
-      - docker push quay.io/ukhomeofficedigital/dq-tf-testsuite:${DRONE_COMMIT_SHA}
+      - docker login -u="ukhomeofficedigital+dqbot" -p=$${DOCKER_PASSWORD} quay.io
+      - docker push quay.io/ukhomeofficedigital/dq-tf-testsuite:$${DRONE_COMMIT_SHA}
+    secrets:
+      - DOCKER_PASSWORD
 
   tag_as_latest_quay:
     image: docker
     environment:
       - DOCKER_HOST=tcp://172.17.0.1:2375
     commands:
-      - docker login -u="ukhomeofficedigital+dqbot" -p=${DOCKER_PASSWORD} quay.io
-      - docker tag quay.io/ukhomeofficedigital/dq-tf-testsuite:${DRONE_COMMIT_SHA} quay.io/ukhomeofficedigital/dq-tf-testsuite:latest
+      - docker login -u="ukhomeofficedigital+dqbot" -p=$${DOCKER_PASSWORD} quay.io
+      - docker tag quay.io/ukhomeofficedigital/dq-tf-testsuite:$${DRONE_COMMIT_SHA} quay.io/ukhomeofficedigital/dq-tf-testsuite:latest
       - docker push quay.io/ukhomeofficedigital/dq-tf-testsuite:latest
+    secrets:
+      - DOCKER_PASSWORD
     when:
       branch: master
       event: push
