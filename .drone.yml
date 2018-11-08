@@ -3,14 +3,14 @@ pipeline:
   build:
     image: docker
     environment:
-      - DOCKER_HOST=tcp://127.0.0.1:2375
+      - DOCKER_HOST=tcp://172.17.0.1:2375
     commands:
       - docker build -t quay.io/ukhomeofficedigital/dq-tf-testsuite:${DRONE_COMMIT_SHA} .
 
   image_to_quay:
     image: docker
     environment:
-      - DOCKER_HOST=tcp://127.0.0.1:2375
+      - DOCKER_HOST=tcp://172.17.0.1:2375
     commands:
       - docker login -u="ukhomeofficedigital+dqbot" -p=${DOCKER_PASSWORD} quay.io
       - docker push quay.io/ukhomeofficedigital/dq-tf-testsuite:${DRONE_COMMIT_SHA}
@@ -18,7 +18,7 @@ pipeline:
   tag_as_latest_quay:
     image: docker
     environment:
-      - DOCKER_HOST=tcp://127.0.0.1:2375
+      - DOCKER_HOST=tcp://172.17.0.1:2375
     commands:
       - docker login -u="ukhomeofficedigital+dqbot" -p=${DOCKER_PASSWORD} quay.io
       - docker tag quay.io/ukhomeofficedigital/dq-tf-testsuite:${DRONE_COMMIT_SHA} quay.io/ukhomeofficedigital/dq-tf-testsuite:latest
@@ -26,11 +26,3 @@ pipeline:
     when:
       branch: master
       event: push
-
-
-services:
-  dind:
-    image: docker:dind
-    command:
-      - "-s"
-      - "overlay"
