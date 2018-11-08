@@ -16,6 +16,8 @@ pipeline:
       - docker push quay.io/ukhomeofficedigital/dq-tf-testsuite:$${DRONE_COMMIT_SHA}
     secrets:
       - DOCKER_PASSWORD
+    when:
+      event: push
 
   tag_as_latest_quay:
     image: docker
